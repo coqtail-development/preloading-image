@@ -130,6 +130,17 @@ Show spinner while fetching image. Display image when fetching is done.
                     Polymer.dom(self.root).removeChild(self.$$('svg'));
                     Polymer.dom(self.root).appendChild(imageElement);
                 });
+
+                imageElement.addEventListener('error', function () {
+                    self.toggleClass('is-loading', false);
+                    Polymer.dom(self.root).removeChild(self.$$('svg'));
+
+                    // Show placeholder instead of image.
+                    var placeholder = document.createElement('img');
+                    placeholder.setAttribute('src', '/assets/placeholder.jpg');
+                    Polymer.dom(self.root).appendChild(placeholder);
+                });
+
                 imageElement.setAttribute('src', this.src);
             }
         });
